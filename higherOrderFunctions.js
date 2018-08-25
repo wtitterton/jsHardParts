@@ -41,7 +41,7 @@ function forEach(array, callback) {
 	var output = [];
   for(var i = 0; i < array.length; i++)
   {
-    output.push(callback(array[i]))
+    output.push(callback(array[i],i,array))
   }
   return output;
 }
@@ -55,14 +55,30 @@ console.log(forEach(["ball","tenni"], addS));
 
 //Extension 1
 function mapWith(array, callback) {
-
+  forEach(array,callback)
 }
-
+mapWith([1,2,3], function(item,index,array){
+  console.log(item);
+  console.log(index);
+  console.log(array);
+})
 //Extension 2
 function reduce(array, callback, initialValue) {
+  var result = initialValue;
 
+  for(var i = 0; i < array.length; i++)
+  {
+    result = callback(array[i],result);
+  }
+
+  return result;
 }
 
+var sum = reduce([5,5,5],function(item, total){
+    return item += total;
+},0)
+
+console.log(sum);
 //Extension 3
 function intersection(arrays) {
 
@@ -80,12 +96,22 @@ function union(arrays) {
 // should log: [5, 10, 15, 88, 1, 7, 100]
 
 //Extension 5
-function objOfMatches(array1, array2, callback) {
-
+function objOfMatches(array1, array2,callback) {
+  var res = {};
+  for(var i = 0; i < array1.length;  i++)
+  {
+    if(callback(array1[i]) == callback(array2[i]))
+    {
+      res[array1[i]] = array2[i];
+    }
+  }
+  return res;
 }
 
-// console.log(objOfMatches(['hi', 'howdy', 'bye', 'later', 'hello'], ['HI', 'Howdy', 'BYE', 'LATER', 'hello'], function(str) { return str.toUpperCase(); }));
-// should log: { hi: 'HI', bye: 'BYE', later: 'LATER' }
+console.log(objOfMatches(['hi', 'howdy', 'bye', 'later', 'hello'], ['HI', 'Howdy', 'BYE', 'LATER', 'hello'],function(str){
+  return str.toLowerCase();
+}));
+
 
 //Extension 6
 function multiMap(arrVals, arrCallbacks) {
