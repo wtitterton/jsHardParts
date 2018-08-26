@@ -69,7 +69,7 @@ function each(arr,callback)
 {
   for(var i = 0; i < arr.length; i++)
   {
-    callback(arr[i],i);
+    callback(arr[i],i,arr[i]);
   }
 }
 
@@ -81,6 +81,4 @@ function delayLog(item,index,delay)
 
 }
 
-each([ 2000, 5000, 0,3500],function(item,index){
-  delayLog(item,index,item);
-});
+each([ 2000, 5000, 0,3500],delayLog);
